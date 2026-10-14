@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>プロダクト寿命DB パイロット</title>
+<meta name="description" content="2025年以降に東証グロースへ上場した企業のインターネットプロダクトの寿命を集計したダッシュボード">
+<style>
+:root {
+  --cds-font-size-caption: 12px; --cds-font-size-body: 14px; --cds-font-size-heading: 16px; --cds-font-size-title: 28px;
+  --cds-font-weight-medium: 600;
+  --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 16px; --cds-gap-lg: 24px; --cds-gap-xl: 32px;
+  --cds-pad-xs: 4px; --cds-pad-sm: 8px; --cds-pad-md: 12px; --cds-pad-lg: 20px; --cds-pad-xl: 28px;
+  --cds-radius: 10px; --cds-dur-slow: 300ms;
+}
+html, body { margin: 0; background: #f6f5f1; }
+.dash-skeleton { color: transparent !important; background: #e9e7e1; border-radius: 4px; }
+.pl { max-width: 1200px; margin-inline: auto; box-sizing: border-box; }
+.pl-foot { font-size: 12px; color: #6b6a65; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+// Minimal stand-in for the Claude dashboard runtime: loads the CSVs, runs calcs, redraws on data/resize.
+(function () {
+  const files = { products: 'products.csv', companies: 'companies.csv' };
+  const state = {}, calcs = {}, subs = [];
+  for (const id in files) state[id] = { status: 'loading', data: [], columns: [] };
+  const run = () => {
+    for (const id in calcs) {
+      const c = calcs[id];
+      const ins = c.inputs.map((i) => state[i]);
+      if (ins.some((s) => s.status === 'error')) state[id] = { status: 'error', data: [] };
+      else if (ins.every((s) => s.status === 'ok')) {
+        try { state[id] = { status: 'ok', data: c.fn(...ins.map((s) => s.data)) }; }
+        catch (e) { console.error(e); state[id] = { status: 'error', data: [] }; }
+      } else state[id] = { status: 'loading', data: [] };
+    }
+    subs.forEach((f) => { try { f(); } catch (e) { console.error(e); } });
+  };
+  window.dash = {
+    colors: ['var(--pl-c0)', 'var(--pl-c1)', 'var(--pl-c2)', 'var(--pl-c3)'],
+    data: (id) => Object.assign({ refreshing: false, meta: [] }, state[id] || { status: 'missing', data: [] }),
+    calc: (id, def) => { calcs[id] = def; state[id] = { status: 'loading', data: [] }; },
+    loader: () => {}, onData: (fn) => { subs.push(fn); fn(); },
+    params: () => ({}), setParams: () => {}, resetParams: () => {}, setLink: () => {}, refresh: () => {},
+  };
+  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(run, 150); });
+  addEventListener('DOMContentLoaded', () => {
+    Promise.all(Object.entries(files).map(([id, f]) => fetch(f).then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then((txt) => { const rows = d3.csvParse(txt.replace(/^\uFEFF/, '')); state[id] = { status: 'ok', data: rows.slice(), columns: rows.columns }; })
+      .catch(() => { state[id] = { status: 'error', data: [] }; }))).then(run);
+  });
+})();
+</script>
+</head>
+<body>
+<div id="dash-root">
+<style>
+#dash-root { --dash-gutter: 0; }
+.pl {
+  color-scheme: light;
+  --pl-font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", "Yu Gothic", Meiryo, system-ui, sans-serif;
+  --color-fg: #1f1e1d; --color-fg-muted: #6b6a65; --color-bg: #ffffff; --color-panel: #ffffff;
+  --color-border-line: #e3e1db; --color-ok: #2e7d32; --color-warn: #b26a00; --color-bad: #c62828;
+  --cds-surface-popover: #ffffff; --cds-border: #dedcd6; --cds-shadow-popover: 0 4px 14px rgba(0,0,0,.08); --cds-text-secondary: #6b6a65;
+  --cds-chart-muted: #bdbab3; --cds-chart-status-critical: #d64545; --cds-chart-axis: #c9c7c1; --cds-chart-grid: #ecebe6; --cds-chart-reference: #9a978f;
+  --pl-c0: #2f6fd6; --pl-c1: #d9822b; --pl-c2: #2e9e6a; --pl-c3: #8a5cd1;
+  background: #f6f5f1; padding: clamp(16px, 4vw, 40px); min-height: 100%;
+}
+.pl { font-family: var(--pl-font); color: var(--color-fg); display: flex; flex-direction: column; gap: var(--cds-gap-lg); }
+.pl b { font-weight: var(--cds-font-weight-medium); }
+.pl-head h1 { font-family: var(--pl-font); font-weight: 600; font-size: var(--cds-font-size-title); margin: 0 0 var(--cds-gap-xs); }
+.pl-take { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); line-height: 1.6; max-width: 60rem; }
+.pl-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr)); gap: var(--cds-gap-md); }
+.pl-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-xs); }
+.pl-tile .lbl { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.pl-tile .num { font-family: var(--pl-font); font-weight: 600; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; min-height: 1.3em; }
+.pl-tile .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.pl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--cds-gap-md); }
+.pl-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-sm); min-width: 0; }
+.pl-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.pl-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0; line-height: 1.5; }
+.pl-chart { position: relative; min-height: 280px; }
+.pl-chart.short { min-height: 180px; }
+.pl-chart svg { display: block; }
+.pl-chart text { font-family: var(--pl-font); }
+.pl-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; display: none; z-index: 2; }
+.pl-tip .t { color: var(--cds-text-secondary); margin-bottom: 2px; }
+.pl-tip .r { display: flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
+.pl-sw { width: 8px; height: 8px; border-radius: 2px; display: inline-block; flex: none; }
+.pl-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm) var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.pl-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.pl-tools { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
+.pl-tools input { font: inherit; font-size: var(--cds-font-size-caption); padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); min-width: 0; flex: 1 1 12rem; max-width: 20rem; }
+.pl-chip { font: inherit; font-size: var(--cds-font-size-caption); padding: 2px 10px; border: 1px solid var(--color-border-line); border-radius: 999px; background: transparent; color: var(--color-fg-muted); cursor: pointer; }
+.pl-chip[aria-pressed="true"] { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
+.pl-count { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.pl-tbl-wrap { max-height: 32rem; overflow: auto; border-top: 1px solid var(--color-border-line); }
+.pl-tbl { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.pl-tbl th { position: sticky; top: 0; background: var(--color-panel); text-align: left; font-weight: var(--cds-font-weight-medium); padding: 0; border-bottom: 1px solid var(--color-border-line); z-index: 1; }
+.pl-tbl th button { font: inherit; background: none; border: 0; color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); cursor: pointer; width: 100%; text-align: inherit; white-space: nowrap; }
+.pl-tbl th[aria-sort="ascending"] button::after { content: " ↑"; }
+.pl-tbl th[aria-sort="descending"] button::after { content: " ↓"; }
+.pl-tbl td { padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+.pl-tbl td.n { text-align: right; }
+.pl-tbl th.n { text-align: right; }
+.pl-tbl td.p { font-weight: var(--cds-font-weight-medium); min-width: 10rem; }
+.pl-tbl a { color: inherit; }
+.pl-pill { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.pl-pill i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.pl-g-up { color: var(--color-ok); }
+.pl-g-na { color: var(--color-fg-muted); }
+@media (max-width: 640px) { .pl-tbl .hide-sm { display: none; } }
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+[data-dash-source-state=empty] { color: transparent; }
+.pl-fail { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: inherit; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.pl-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+</style>
+
+<div class="pl">
+  <header class="pl-head" id="top">
+    <h1>プロダクト寿命DB パイロット</h1>
+    <p class="pl-take" id="takeaway">
+      2025年1月〜2026年10月に東証グロースへ上場した企業のうちインターネットプロダクトを運営する
+      <b data-source="kpi" data-field="value" data-where="metric=companies" class="dash-skeleton">—</b>社の
+      <b data-source="kpi" data-field="value" data-where="metric=products" class="dash-skeleton">—</b>プロダクトを沿革から集計。終了・統合・譲渡を確認できたのは
+      <b data-source="kpi" data-field="value" data-where="metric=events" class="dash-skeleton">—</b>件で、生存率はもっとも低い時点（<b data-source="kpi" data-field="value" data-where="metric=min_at_years" class="dash-skeleton">—</b>年）でも
+      <b data-source="kpi" data-field="value" data-where="metric=min_survival" class="dash-skeleton">—</b>。平均寿命（生存率50%）はこの母集団ではまだ観測できていません。
+    </p>
+  </header>
+
+  <section class="pl-tiles" id="tiles">
+    <div class="pl-tile"><span class="lbl">対象企業</span><span class="num dash-skeleton" data-source="kpi" data-field="value" data-where="metric=companies">—</span><span class="sub">上場60社中（境界3社は別扱い）</span></div>
+    <div class="pl-tile"><span class="lbl">プロダクト</span><span class="num dash-skeleton" data-source="kpi" data-field="value" data-where="metric=products">—</span><span class="sub">沿革・開示資料から抽出</span></div>
+    <div class="pl-tile"><span class="lbl">稼働中</span><span class="num dash-skeleton" data-source="kpi" data-field="value" data-where="metric=active">—</span><span class="sub">2026年10月時点</span></div>
+    <div class="pl-tile"><span class="lbl">終了・統合・譲渡</span><span class="num dash-skeleton" data-source="kpi" data-field="value" data-where="metric=events">—</span><span class="sub">終了時期まで確認できたもの</span></div>
+    <div class="pl-tile"><span class="lbl">状況不明</span><span class="num dash-skeleton" data-source="kpi" data-field="value" data-where="metric=unknown">—</span><span class="sub">沿革に以後の記載なし</span></div>
+    <div class="pl-tile"><span class="lbl">10年生存率</span><span class="num dash-skeleton" data-source="kpi" data-field="value" data-where="metric=s10">—</span><span class="sub">カプラン・マイヤー推定（不明を除く）</span></div>
+  </section>
+
+  <section class="pl-grid">
+    <div class="pl-card" id="survival">
+      <h2>プロダクトの生存曲線</h2>
+      <p class="pl-note">リリースから何ヶ月後にまだ提供されているかの割合。稼働中は2026年10月で打ち切り（センサー）として扱う。実線は状況不明を除いた推定、点線は不明を稼働中とみなした推定。</p>
+      <div class="pl-legend" id="km-legend"></div>
+      <div class="pl-chart" id="km-chart" data-source="km"></div>
+    </div>
+    <div class="pl-card" id="by-year">
+      <h2>リリース年別のプロダクト数と現在の状態</h2>
+      <p class="pl-note">古いプロダクトほど終了・統合が多いが、不明も多い。2020年以降のリリースはまだほぼ全てが稼働中。</p>
+      <div class="pl-legend" id="yr-legend"></div>
+      <div class="pl-chart" id="yr-chart" data-source="byyear"></div>
+    </div>
+  </section>
+
+  <section class="pl-grid">
+    <div class="pl-card" id="longlived">
+      <h2>5年以上続くプロダクトは伸びているか</h2>
+      <p class="pl-note">リリースから60ヶ月以上たって稼働中のプロダクトを、開示KPI（ARR・会員数・契約数など）で判定。売上をプロダクト単位で開示している企業は少なく、ほとんどが未判定。</p>
+      <div class="pl-chart short" id="ll-chart" data-source="longlived"></div>
+    </div>
+    <div class="pl-card" id="ended">
+      <h2>終了・統合・譲渡したプロダクト</h2>
+      <p class="pl-note">寿命が確定した全件。多くは終了ではなく、別プロダクトへの統合や事業譲渡。</p>
+      <div class="pl-chart" id="end-chart" data-source="products"></div>
+    </div>
+  </section>
+
+  <section class="pl-card" id="products">
+    <h2>プロダクト一覧</h2>
+    <p class="pl-note">確度：高＝有報・Iの部の沿革に明記／中＝沿革と公式サイト等から推定／低＝沿革に以後の記載がなく現状未確認。寿命は月数（稼働中は2026年10月まで）。</p>
+    <div class="pl-tools">
+      <input type="search" id="q" placeholder="プロダクト名・企業名で検索" aria-label="検索">
+      <div id="chips" class="pl-tools"></div>
+      <span class="pl-count" id="cnt"></span>
+    </div>
+    <div class="pl-tbl-wrap">
+      <table class="pl-tbl" id="ptbl" data-source="products" data-row-key="id">
+        <thead><tr>
+          <th data-field="product"><button data-k="product">プロダクト</button></th>
+          <th data-field="company"><button data-k="company">企業</button></th>
+          <th data-field="type" class="hide-sm"><button data-k="type">区分</button></th>
+          <th data-field="launch"><button data-k="launch">リリース</button></th>
+          <th data-field="status"><button data-k="status">状態</button></th>
+          <th data-field="end" class="hide-sm"><button data-k="end">終了</button></th>
+          <th data-field="months" class="n"><button data-k="months" data-num="1">寿命(月)</button></th>
+          <th data-field="growth"><button data-k="growth">成長</button></th>
+          <th data-field="confidence" class="hide-sm"><button data-k="confidence">確度</button></th>
+          <th data-field="source" class="hide-sm"><button data-k="source">出典</button></th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="pl-card" id="companies">
+    <h2>対象企業</h2>
+    <p class="pl-note">2025年1月〜2026年10月15日に東証グロースへ新規上場した60社。対象外はインターネットプロダクトが主事業でない企業。</p>
+    <div class="pl-tbl-wrap">
+      <table class="pl-tbl" id="ctbl" data-source="companies" data-row-key="code">
+        <thead><tr>
+          <th data-field="code"><button data-k="code">コード</button></th>
+          <th data-field="company"><button data-k="company">企業</button></th>
+          <th data-field="listed"><button data-k="listed">上場日</button></th>
+          <th data-field="scope"><button data-k="scope">区分</button></th>
+          <th data-field="products" class="n"><button data-k="products" data-num="1">プロダクト数</button></th>
+          <th data-field="note" class="hide-sm"><button data-k="note">備考</button></th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+const ENDED = ['終了', '統合', '譲渡', '販売終了'];
+
+dash.calc('km', {
+  inputs: ['products'],
+  title: '生存曲線（カプラン・マイヤー）',
+  description: '寿命(月)と終了有無から、状況不明を除く推定と不明を稼働中とみなす推定の2本を計算。',
+  fn: (products) => {
+    const curve = (rows) => {
+      const d = rows.filter(r => r.months !== '').map(r => ({ t: Number(r.months), e: r.event === '1' }));
+      const times = [...new Set(d.filter(x => x.e).map(x => x.t))].sort((a, b) => a - b);
+      let s = 1; const out = [{ months: 0, survival: 1, at_risk: d.length, events: 0 }];
+      for (const t of times) {
+        const n = d.filter(x => x.t >= t).length, k = d.filter(x => x.t === t && x.e).length;
+        s *= 1 - k / n; out.push({ months: t, survival: s, at_risk: n, events: k });
+      }
+      const maxT = Math.max(...d.map(x => x.t));
+      out.push({ months: maxT, survival: s, at_risk: d.filter(x => x.t >= maxT).length, events: 0 });
+      return out;
+    };
+    return [
+      ...curve(products.filter(r => r.status !== '不明')).map(r => ({ series: '不明を除く', ...r })),
+      ...curve(products).map(r => ({ series: '不明を稼働中とみなす', ...r })),
+    ];
+  },
+});
+
+dash.calc('kpi', {
+  inputs: ['products', 'companies', 'km'],
+  title: '主要指標',
+  description: '企業数・プロダクト数・状態別件数と、生存曲線から読む10年生存率・最低生存率。',
+  fn: (products, companies, km) => {
+    const strict = km.filter(r => r.series === '不明を除く');
+    const at = (m) => strict.filter(r => r.months <= m).slice(-1)[0].survival;
+    const last = strict.filter(r => r.events > 0).slice(-1)[0];
+    return [
+      { metric: 'companies', value: companies.filter(c => c.scope === '対象').length },
+      { metric: 'products', value: products.length },
+      { metric: 'active', value: products.filter(p => p.status === '稼働中').length },
+      { metric: 'events', value: products.filter(p => p.event === '1').length },
+      { metric: 'unknown', value: products.filter(p => p.status === '不明').length },
+      { metric: 's10', value: at(120) },
+      { metric: 'min_survival', value: last.survival },
+      { metric: 'min_at_years', value: Math.round(last.months / 12 * 10) / 10 },
+    ];
+  },
+});
+
+dash.calc('byyear', {
+  inputs: ['products'],
+  title: 'リリース年別の状態',
+  description: 'リリース年ごとに稼働中・統合/譲渡・終了・不明の件数を数える。',
+  fn: (products) => {
+    const years = [...new Set(products.map(p => Number(p.launch_year)))].sort((a, b) => a - b);
+    return years.map(y => {
+      const ps = products.filter(p => Number(p.launch_year) === y);
+      return {
+        launch_year: y,
+        active: ps.filter(p => p.status === '稼働中').length,
+        merged: ps.filter(p => p.status === '統合' || p.status === '譲渡').length,
+        ended: ps.filter(p => p.status === '終了' || p.status === '販売終了').length,
+        unknown: ps.filter(p => p.status === '不明').length,
+      };
+    });
+  },
+});
+
+dash.calc('longlived', {
+  inputs: ['products'],
+  title: '5年以上稼働中の成長判定',
+  description: 'リリースから60ヶ月以上たった稼働中プロダクトを、成長判定ごとに数える。',
+  fn: (products) => {
+    const ll = products.filter(p => p.status === '稼働中' && Number(p.months) >= 60);
+    return ['成長', '成長(累計)', '未判定'].map(g => ({ growth: g, n: ll.filter(p => p.growth === g).length }));
+  },
+});
+
+(() => {
+  const fmtInt = d3.format(',');
+  const fmtPct = d3.format('.1%');
+  const css = (n) => getComputedStyle(document.getElementById('dash-root')).getPropertyValue(n).trim();
+  const statusColor = (s) => s === '稼働中' ? 'var(--pl-c0)' : (s === '統合' || s === '譲渡') ? 'var(--pl-c1)' : s === '不明' ? 'var(--cds-chart-muted)' : 'var(--cds-chart-status-critical)';
+
+  const fail = (el) => { el.innerHTML = ''; const d = document.createElement('div'); d.className = 'pl-fail'; d.textContent = 'Failed to load'; el.appendChild(d); };
+  const tipOf = (box) => { let t = box.querySelector('.pl-tip'); if (!t) { t = document.createElement('div'); t.className = 'pl-tip'; box.appendChild(t); } return t; };
+  const showTip = (box, tip, ev, title, lines) => {
+    tip.innerHTML = '';
+    const h = document.createElement('div'); h.className = 't'; h.textContent = title; tip.appendChild(h);
+    for (const [color, label, val] of lines) {
+      const r = document.createElement('div'); r.className = 'r';
+      if (color) { const s = document.createElement('i'); s.className = 'pl-sw'; s.style.background = color; r.appendChild(s); }
+      const l = document.createElement('span'); l.textContent = label; r.appendChild(l);
+      const v = document.createElement('b'); v.textContent = val; v.style.marginLeft = 'auto'; v.style.paddingLeft = '8px'; r.appendChild(v);
+      tip.appendChild(r);
+    }
+    tip.style.display = 'block';
+    const b = box.getBoundingClientRect();
+    let x = ev.clientX - b.left + 12, y = ev.clientY - b.top + 12;
+    if (x + tip.offsetWidth > b.width) x = ev.clientX - b.left - tip.offsetWidth - 12;
+    if (x < 0) x = 0;
+    if (y + tip.offsetHeight > b.height) y = Math.max(0, b.height - tip.offsetHeight);
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  };
+  const legend = (el, items) => {
+    el.innerHTML = '';
+    for (const [c, label, dashed] of items) {
+      const s = document.createElement('span'); const i = document.createElement('i'); i.className = 'pl-sw';
+      i.style.background = dashed ? 'transparent' : c; if (dashed) { i.style.borderTop = `2px dashed ${c}`; i.style.height = '0'; i.style.width = '14px'; i.style.borderRadius = '0'; }
+      s.appendChild(i); s.append(label); el.appendChild(s);
+    }
+  };
+  const axisStyle = (g) => {
+    g.attr('font-size', null).attr('font-family', null);
+    g.selectAll('text').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)');
+    g.selectAll('.domain').attr('stroke', 'var(--cds-chart-axis)');
+    g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)');
+  };
+
+  // ---------- table helper ----------
+  function makeTable(tbl, cols, keyOf, getRows, render) {
+    const state = { k: null, dir: 1 };
+    tbl.querySelectorAll('th button').forEach(btn => btn.addEventListener('click', () => {
+      const k = btn.dataset.k; state.dir = state.k === k ? -state.dir : 1; state.k = k;
+      tbl.querySelectorAll('th').forEach(th => th.removeAttribute('aria-sort'));
+      btn.parentElement.setAttribute('aria-sort', state.dir > 0 ? 'ascending' : 'descending');
+      draw();
+    }));
+    function draw() {
+      let rows = getRows().slice();
+      if (state.k) {
+        const num = !!tbl.querySelector(`button[data-k="${state.k}"]`).dataset.num;
+        rows.sort((a, b) => {
+          const x = a[state.k], y = b[state.k];
+          if (num) return ((x === '' ? -1 : Number(x)) - (y === '' ? -1 : Number(y))) * state.dir;
+          return String(x).localeCompare(String(y), 'ja') * state.dir;
+        });
+      }
+      const tb = tbl.querySelector('tbody'); tb.innerHTML = '';
+      for (const r of rows) {
+        const tr = document.createElement('tr'); tr.dataset.key = keyOf(r);
+        render(tr, r); tb.appendChild(tr);
+      }
+      return rows.length;
+    }
+    return draw;
+  }
+  const td = (tr, text, cls) => { const c = document.createElement('td'); if (cls) c.className = cls; c.textContent = text; tr.appendChild(c); return c; };
+
+  // ---------- product table ----------
+  const STATUSES = ['すべて', '稼働中', '統合', '譲渡', '終了', '販売終了', '不明'];
+  let statusFilter = 'すべて';
+  const q = document.getElementById('q');
+  const chips = document.getElementById('chips');
+  STATUSES.forEach(s => {
+    const b = document.createElement('button'); b.className = 'pl-chip'; b.textContent = s;
+    b.setAttribute('aria-pressed', s === statusFilter ? 'true' : 'false');
+    b.addEventListener('click', () => { statusFilter = s; chips.querySelectorAll('.pl-chip').forEach(c => c.setAttribute('aria-pressed', c.textContent === s ? 'true' : 'false')); drawProducts(); });
+    chips.appendChild(b);
+  });
+  q.addEventListener('input', () => drawProducts());
+
+  const ptbl = document.getElementById('ptbl');
+  const drawPTable = makeTable(ptbl, null, r => r.id, () => {
+    const d = dash.data('products'); if (d.status !== 'ok') return [];
+    const s = q.value.trim().toLowerCase();
+    return d.data.filter(r => (statusFilter === 'すべて' || r.status === statusFilter) &&
+      (!s || (r.product + ' ' + r.company + ' ' + r.note).toLowerCase().includes(s)));
+  }, (tr, r) => {
+    td(tr, r.product, 'p');
+    td(tr, r.company);
+    td(tr, r.type, 'hide-sm');
+    td(tr, r.launch);
+    const st = td(tr, ''); const pill = document.createElement('span'); pill.className = 'pl-pill';
+    const dot = document.createElement('i'); dot.style.background = statusColor(r.status); pill.appendChild(dot); pill.append(r.status); st.appendChild(pill);
+    td(tr, r.end, 'hide-sm');
+    td(tr, r.months === '' ? '' : fmtInt(Number(r.months)), 'n');
+    const g = td(tr, r.growth); g.className = r.growth.startsWith('成長') ? 'pl-g-up' : 'pl-g-na';
+    if (r.growth_evidence) g.title = r.growth_evidence;
+    td(tr, r.confidence, 'hide-sm');
+    const sc = td(tr, '', 'hide-sm');
+    if (/^https:\/\//.test(r.source)) { const a = document.createElement('a'); a.href = r.source; a.target = '_blank'; a.rel = 'noopener'; a.textContent = r.source; sc.appendChild(a); }
+    else sc.textContent = r.source;
+  });
+  const cnt = document.getElementById('cnt');
+  function drawProducts() {
+    const n = drawPTable();
+    const d = dash.data('products');
+    cnt.textContent = d.status === 'ok' ? `${fmtInt(n)} 件表示` : '';
+  }
+
+  const ctbl = document.getElementById('ctbl');
+  const drawCTable = makeTable(ctbl, null, r => r.code, () => {
+    const d = dash.data('companies'); return d.status === 'ok' ? d.data : [];
+  }, (tr, r) => {
+    td(tr, r.code); td(tr, r.company); td(tr, r.listed); td(tr, r.scope);
+    td(tr, fmtInt(Number(r.products)), 'n'); td(tr, r.note, 'hide-sm');
+  });
+
+  // ---------- KM chart ----------
+  function drawKM() {
+    const box = document.getElementById('km-chart');
+    const d = dash.data('km');
+    if (d.status === 'error') return fail(box);
+    box.innerHTML = '';
+    if (d.status !== 'ok') return;
+    const rows = d.data;
+    const series = ['不明を除く', '不明を稼働中とみなす'];
+    legend(document.getElementById('km-legend'), [['var(--pl-c0)', '不明を除く', false], ['var(--pl-c0)', '不明を稼働中とみなす', true]]);
+    const W = Math.max(280, box.clientWidth), H = 280;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const maxM = d3.max(rows, r => r.months);
+    const y = d3.scaleLinear([0, 1], [H - 28, 10]);
+    const yAxis = d3.axisLeft(y).ticks(5).tickFormat(d3.format('.0%'));
+    const probe = svg.append('g').call(yAxis); axisStyle(probe);
+    let ml = 0; probe.selectAll('text').each(function () { ml = Math.max(ml, this.getComputedTextLength()); }); probe.remove();
+    ml += 14;
+    const x = d3.scaleLinear([0, Math.ceil(maxM / 12) * 12], [ml, W - 16]);
+    const yrs = d3.range(0, Math.ceil(maxM / 12) + 1, W < 420 ? 4 : 2).map(v => v * 12);
+    svg.append('g').attr('transform', `translate(0,${H - 28})`).call(d3.axisBottom(x).tickValues(yrs).tickFormat(v => `${v / 12}年`).tickSizeOuter(0)).call(axisStyle);
+    svg.append('g').attr('transform', `translate(${ml},0)`).call(yAxis.tickSize(-(W - 16 - ml))).call(axisStyle).call(g => g.select('.domain').remove());
+    svg.append('line').attr('x1', ml).attr('x2', W - 16).attr('y1', y(0.5)).attr('y2', y(0.5)).attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '4 3');
+    svg.append('text').attr('x', W - 16).attr('y', y(0.5) - 4).attr('text-anchor', 'end').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text('50%＝平均寿命の目安');
+    const line = d3.line().x(r => x(r.months)).y(r => y(r.survival)).curve(d3.curveStepAfter);
+    series.forEach((s, i) => {
+      svg.append('path').datum(rows.filter(r => r.series === s)).attr('d', line).attr('fill', 'none')
+        .attr('stroke', 'var(--pl-c0)').attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', i ? 'butt' : 'round')
+        .attr('stroke-dasharray', i ? '5 4' : null).attr('opacity', i ? 0.7 : 1);
+    });
+    const ev = rows.filter(r => r.series === series[0] && r.events > 0);
+    svg.append('g').selectAll('circle').data(ev).join('circle').attr('cx', r => x(r.months)).attr('cy', r => y(r.survival)).attr('r', 3).attr('fill', 'var(--pl-c0)');
+    const tip = tipOf(box);
+    const rule = svg.append('line').attr('y1', 10).attr('y2', H - 28).attr('stroke', 'var(--cds-chart-reference)').style('display', 'none');
+    svg.append('rect').attr('x', ml).attr('y', 0).attr('width', W - 16 - ml).attr('height', H - 28).attr('fill', 'transparent')
+      .on('mousemove', (e) => {
+        const m = x.invert(d3.pointer(e)[0]);
+        const val = (s) => rows.filter(r => r.series === s && r.months <= m).slice(-1)[0];
+        const a = val(series[0]), b = val(series[1]);
+        rule.style('display', null).attr('x1', x(m)).attr('x2', x(m));
+        showTip(box, tip, e, `リリースから${(m / 12).toFixed(1)}年`, [['var(--pl-c0)', series[0], fmtPct(a.survival)], [null, series[1], fmtPct(b.survival)], [null, 'その時点で観測中', `${fmtInt(a.at_risk)}件`]]);
+      })
+      .on('mouseleave', () => { tip.style.display = 'none'; rule.style('display', 'none'); });
+  }
+
+  // ---------- by year ----------
+  function drawYear() {
+    const box = document.getElementById('yr-chart');
+    const d = dash.data('byyear');
+    if (d.status === 'error') return fail(box);
+    box.innerHTML = '';
+    if (d.status !== 'ok') return;
+    const keys = [['active', '稼働中', 'var(--pl-c0)'], ['merged', '統合・譲渡', 'var(--pl-c1)'], ['ended', '終了', 'var(--cds-chart-status-critical)'], ['unknown', '不明', 'var(--cds-chart-muted)']];
+    legend(document.getElementById('yr-legend'), keys.map(k => [k[2], k[1]]));
+    const rows = d.data;
+    const W = Math.max(280, box.clientWidth), H = 280;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const stack = d3.stack().keys(keys.map(k => k[0]))(rows);
+    const y = d3.scaleLinear([0, d3.max(rows, r => r.active + r.merged + r.ended + r.unknown)], [H - 28, 10]).nice();
+    const yAxis = d3.axisLeft(y).ticks(5).tickFormat(d3.format('d'));
+    const probe = svg.append('g').call(yAxis); axisStyle(probe);
+    let ml = 0; probe.selectAll('text').each(function () { ml = Math.max(ml, this.getComputedTextLength()); }); probe.remove(); ml += 12;
+    const x = d3.scaleBand(rows.map(r => r.launch_year), [ml, W - 8]).padding(0.25);
+    const every = Math.ceil(rows.length / Math.max(4, Math.floor((W - ml) / 42)));
+    svg.append('g').attr('transform', `translate(${ml},0)`).call(yAxis.tickSize(-(W - 8 - ml))).call(axisStyle).call(g => g.select('.domain').remove());
+    svg.append('g').attr('transform', `translate(0,${H - 28})`).call(d3.axisBottom(x).tickValues(rows.map(r => r.launch_year).filter((v, i) => i % every === 0)).tickSizeOuter(0)).call(axisStyle);
+    const tip = tipOf(box);
+    stack.forEach((layer, i) => {
+      svg.append('g').selectAll('rect').data(layer).join('rect')
+        .attr('x', s => x(s.data.launch_year)).attr('width', x.bandwidth())
+        .attr('y', s => y(s[1])).attr('height', s => Math.max(0, y(s[0]) - y(s[1])))
+        .attr('fill', keys[i][2]);
+    });
+    svg.append('g').selectAll('rect').data(rows).join('rect')
+      .attr('x', r => x(r.launch_year) - x.step() * x.paddingInner() / 2).attr('width', x.step()).attr('y', 0).attr('height', H - 28).attr('fill', 'transparent')
+      .on('mousemove', (e, r) => showTip(box, tip, e, `${r.launch_year}年リリース`, keys.map(k => [k[2], k[1], `${fmtInt(r[k[0]])}件`])))
+      .on('mouseleave', () => { tip.style.display = 'none'; });
+  }
+
+  // ---------- long-lived ----------
+  function drawLL() {
+    const box = document.getElementById('ll-chart');
+    const d = dash.data('longlived');
+    if (d.status === 'error') return fail(box);
+    box.innerHTML = '';
+    if (d.status !== 'ok') return;
+    const rows = d.data;
+    const W = Math.max(280, box.clientWidth), rowH = 44, H = rows.length * rowH + 8;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const color = { '成長': 'var(--pl-c2)', '成長(累計)': 'var(--pl-c3)', '未判定': 'var(--cds-chart-muted)' };
+    const lab = { '成長': '成長を確認', '成長(累計)': '累計値のみ増加', '未判定': '開示なしで未判定' };
+    const probe = svg.append('g'); let ml = 0;
+    rows.forEach(r => { const t = probe.append('text').style('font-size', 'var(--cds-font-size-caption)').text(lab[r.growth]); ml = Math.max(ml, t.node().getComputedTextLength()); }); probe.remove();
+    ml += 12;
+    const x = d3.scaleLinear([0, d3.max(rows, r => r.n)], [ml, W - 40]);
+    const g = svg.append('g').selectAll('g').data(rows).join('g').attr('transform', (r, i) => `translate(0,${i * rowH + 8})`);
+    g.append('text').attr('x', 0).attr('y', 16).attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text(r => lab[r.growth]);
+    g.append('rect').attr('x', ml).attr('y', 4).attr('height', 22).attr('rx', 4).attr('width', r => Math.max(2, x(r.n) - ml)).attr('fill', r => color[r.growth]);
+    g.append('text').attr('x', r => x(r.n) + 6).attr('y', 20).attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').style('font-variant-numeric', 'tabular-nums').text(r => `${fmtInt(r.n)}件`);
+  }
+
+  // ---------- ended list ----------
+  function drawEnded() {
+    const box = document.getElementById('end-chart');
+    const d = dash.data('products');
+    if (d.status === 'error') return fail(box);
+    box.innerHTML = '';
+    if (d.status !== 'ok') return;
+    const rows = d.data.filter(r => r.event === '1').map(r => ({ ...r, m: Number(r.months) })).sort((a, b) => b.m - a.m);
+    const W = Math.max(280, box.clientWidth), rowH = 22, H = rows.length * rowH + 30;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`);
+    const probe = svg.append('g'); let ml = 0;
+    rows.forEach(r => { const t = probe.append('text').style('font-size', 'var(--cds-font-size-caption)').text(r.product); ml = Math.max(ml, t.node().getComputedTextLength()); }); probe.remove();
+    ml = Math.min(ml + 10, W * 0.45);
+    const x = d3.scaleLinear([0, Math.ceil(d3.max(rows, r => r.m) / 12) * 12], [ml, W - 48]);
+    svg.append('g').attr('transform', `translate(0,${H - 22})`).call(d3.axisBottom(x).tickValues(d3.range(0, x.domain()[1] + 1, W < 420 ? 60 : 36)).tickFormat(v => `${v / 12}年`).tickSizeOuter(0)).call(axisStyle);
+    const tip = tipOf(box);
+    const g = svg.append('g').selectAll('g').data(rows).join('g').attr('transform', (r, i) => `translate(0,${i * rowH})`);
+    g.append('text').attr('x', ml - 8).attr('y', 14).attr('text-anchor', 'end').attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text(r => r.product);
+    g.append('rect').attr('x', ml).attr('y', 4).attr('height', 14).attr('rx', 4).attr('width', r => Math.max(2, x(r.m) - ml)).attr('fill', r => statusColor(r.status));
+    g.append('text').attr('x', r => x(r.m) + 6).attr('y', 15).attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').style('font-variant-numeric', 'tabular-nums').text(r => `${(r.m / 12).toFixed(1)}年`);
+    g.append('rect').attr('x', 0).attr('y', 0).attr('width', W).attr('height', rowH).attr('fill', 'transparent')
+      .on('mousemove', (e, r) => showTip(box, tip, e, `${r.company}｜${r.product}`, [[statusColor(r.status), r.status, `${r.launch} → ${r.end}`], [null, '寿命', `${fmtInt(r.m)}ヶ月`], [null, '後継・譲渡先', r.successor || '—']]))
+      .on('mouseleave', () => { tip.style.display = 'none'; });
+  }
+
+  // ---------- KPI ----------
+  function drawKPI() {
+    const d = dash.data('kpi');
+    document.querySelectorAll('[data-source="kpi"]').forEach(el => {
+      const key = new URLSearchParams(el.dataset.where).get('metric');
+      if (d.status !== 'ok') { if (d.status === 'error') { el.classList.remove('dash-skeleton'); el.textContent = '—'; } return; }
+      el.classList.remove('dash-skeleton');
+      const r = d.data.find(x => x.metric === key);
+      if (!r) { el.textContent = '—'; return; }
+      el.textContent = ['s10', 'min_survival'].includes(key) ? fmtPct(r.value) : key === 'min_at_years' ? String(r.value) : fmtInt(r.value);
+    });
+  }
+
+  dash.onData(() => {
+    drawKPI(); drawKM(); drawYear(); drawLL(); drawEnded(); drawProducts(); drawCTable();
+  });
+})();
+</script>
+
+</div>
+</body>
+</html>

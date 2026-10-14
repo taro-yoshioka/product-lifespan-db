@@ -1,0 +1,147 @@
+﻿id,code,company,listed,product,type,launch,launch_year,status,end,end_type,successor,months,event,confidence,growth,growth_evidence,growth_source,source,note
+P001,479A,PRONI,2025-12-24,PRONIアイミツ（旧アイミツ）,BtoB,2014-02,2014,稼働中,,,,152,0,高,未判定,,,https://www.kabutore.biz/genzaikabuka/enkaku.html?code=479a,2023-09 改名
+P002,479A,PRONI,2025-12-24,発注コンシェルジュサービス,BtoB,2014-09,2014,不明,,,,145,0,低,未判定,,,https://www.kabutore.biz/genzaikabuka/enkaku.html?code=479a,沿革に以降の記載なし
+P003,479A,PRONI,2025-12-24,アイミツCLOUD,BtoB,2021-04,2021,統合,,統合,PRONIアイミツ,,,中,未判定,,,https://www.kabutore.biz/genzaikabuka/enkaku.html?code=479a,統合時期の記載なし（2023-09に改名）
+P004,472A,ミラティブ,2025-12-18,Mirrativ,BtoC,2015-08,2015,稼働中,,,,134,0,高,成長(累計),累計配信者 100万(2019/1)→500万(2023/11)→約569万(2025/7),https://www.moguravr.com/?p=274049,https://kitaishihon.com/company/472A/story,DeNAで開始→2018-03 承継
+P005,472A,ミラティブ,2025-12-18,ライブゲーム「エモモRUN」,BtoC,2020-08,2020,不明,,,,74,0,低,未判定,,,https://kitaishihon.com/company/472A/story,アプリ内コンテンツ
+P006,472A,ミラティブ,2025-12-18,ライブゲーム「エモモバトルドロップ」,BtoC,2021-02,2021,不明,,,,68,0,低,未判定,,,https://kitaishihon.com/company/472A/story,アプリ内コンテンツ
+P007,472A,ミラティブ,2025-12-18,ライブゲーム「エモランあーるぴーじー」,BtoC,2022-04,2022,不明,,,,54,0,低,未判定,,,https://kitaishihon.com/company/472A/story,アプリ内コンテンツ
+P008,472A,ミラティブ,2025-12-18,ライブゲーム「スラポンコロシアム」,BtoC,2023-12,2023,不明,,,,34,0,低,未判定,,,https://kitaishihon.com/company/472A/story,アプリ内コンテンツ
+P009,462A,FUNDINNO,2025-12-05,FUNDINNO,BtoB2C,2017-04,2017,稼働中,,,,114,0,高,成長,累計成約額 150億(2024/10)→200億超(2025/5)（PLUS+含む）,https://thebridge.jp/2025/05/fundinno-a-provider-of-equity-crowdfunding-and-large-scale-fundraising-support-surpasses-20-billion-yen-in-total-deal-volume,https://kitaishihon.com/company/462A/story,第1号案件開示
+P010,462A,FUNDINNO,2025-12-05,FUNDOOR,BtoB,2019-10,2019,稼働中,,,,84,0,中,未判定,,,https://kitaishihon.com/company/462A/story,
+P011,462A,FUNDINNO,2025-12-05,FUNDINNO MARKET,BtoC,2021-12,2021,稼働中,,,,58,0,中,未判定,,,https://kitaishihon.com/company/462A/story,
+P012,462A,FUNDINNO,2025-12-05,FUNDINNO PLUS+,BtoB2C,2022-11,2022,稼働中,,,,47,0,中,未判定,,,https://kitaishihon.com/company/462A/story,
+P013,462A,FUNDINNO,2025-12-05,MUFG FUNDOOR,BtoB,2023-04,2023,稼働中,,,,42,0,中,未判定,,,https://kitaishihon.com/company/462A/story,三菱UFJ信託と共同開発
+P014,462A,FUNDINNO,2025-12-05,FUNDINNO MARKET PLUS+,BtoC,2025-09,2025,稼働中,,,,13,0,中,未判定,,,https://kitaishihon.com/company/462A/story,
+P015,460A,BRANU,2025-12-01,CAREECON,BtoB,2014-06,2014,稼働中,,,,148,0,高,成長,"登録社数 2,406(2020/10)→5,572(2025/7)",https://holistic-r.org/?p=8661,https://kitaishihon.com/company/460A/story,
+P016,460A,BRANU,2025-12-01,CAREECON 施工管理,BtoB,2019-11,2019,統合,2023-09,統合,CAREECON Plus,46,1,高,未判定,,,https://kitaishihon.com/company/460A/story,単体での新規獲得停止
+P017,460A,BRANU,2025-12-01,CAREECON Plus,BtoB,2022-02,2022,稼働中,,,,56,0,高,未判定,,,https://kitaishihon.com/company/460A/story,miniプランで開始→2023-09 統合版
+P018,460A,BRANU,2025-12-01,CAREECON 採用,BtoB,2022-11,2022,統合,2023-09,統合,CAREECON Plus,10,1,高,未判定,,,https://kitaishihon.com/company/460A/story,単体での新規獲得停止
+P019,460A,BRANU,2025-12-01,キャリコンジョブ,BtoB,2025-05,2025,稼働中,,,,17,0,高,未判定,,,https://kitaishihon.com/company/460A/story,
+P020,441A,NE,2025-11-04,ネクストエンジン,BtoB,2008-05,2008,稼働中,,,,221,0,高,未判定,,,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100WEGF.pdf,2007-11社内稼働、2022-08 NEへ承継
+P021,438A,インフキュリオン,2025-10-24,Anywhere（mPOS）,BtoB,2011-08,2011,稼働中,,,,182,0,中,未判定,,,https://kitaishihon.com/company/438A/story,子会社リンク・プロセシング
+P022,438A,インフキュリオン,2025-10-24,finbee,BtoC,2016-12,2016,不明,,,,118,0,低,未判定,,,https://infcurion.com/news/resources/news-20160920_225,子会社ネストエッグ
+P023,438A,インフキュリオン,2025-10-24,Wallet Station,BtoB,2018-08,2018,稼働中,,,,98,0,中,未判定,,,https://kitaishihon.com/company/438A/story,
+P024,438A,インフキュリオン,2025-10-24,Xard（旧Kyash Direct）,BtoB,2020-10,2020,稼働中,,,,72,0,高,未判定,,,https://kitaishihon.com/company/438A/story,Kyashから譲受→2021-03 改名
+P025,438A,インフキュリオン,2025-10-24,CharG,BtoB,2023-07,2023,稼働中,,,,39,0,中,未判定,,,https://kitaishihon.com/company/438A/story,
+P026,438A,インフキュリオン,2025-10-24,Winvoice,BtoB,2023-10,2023,稼働中,,,,36,0,中,未判定,,,https://kitaishihon.com/company/438A/story,
+P027,438A,インフキュリオン,2025-10-24,Axios,BtoB,2026-04,2026,稼働中,,,,6,0,中,未判定,,,https://kitaishihon.com/company/438A/story,
+P028,436A,サイバーソリューションズ,2025-10-23,CyberMail,BtoB,2001-01,2001,不明,,,,309,0,低,未判定,,,https://kitaishihon.com/company/436A/story,オンプレ版
+P029,436A,サイバーソリューションズ,2025-10-23,MailBase,BtoB,2005-01,2005,不明,,,,261,0,低,未判定,,,https://kitaishihon.com/company/436A/story,
+P030,436A,サイバーソリューションズ,2025-10-23,MailGates,BtoB,2005-11,2005,不明,,,,251,0,低,未判定,,,https://kitaishihon.com/company/436A/story,
+P031,436A,サイバーソリューションズ,2025-10-23,CYBERMAIL Σ,BtoB,2009-01,2009,稼働中,,,,213,0,中,未判定,,,https://kitaishihon.com/company/436A/story,主力クラウド
+P032,436A,サイバーソリューションズ,2025-10-23,MAILBASE Σ,BtoB,2012-12,2012,稼働中,,,,166,0,中,未判定,,,https://kitaishihon.com/company/436A/story,
+P033,436A,サイバーソリューションズ,2025-10-23,CYBERMAIL Σ-ST,BtoB,2016-11,2016,稼働中,,,,119,0,中,未判定,,,https://kitaishihon.com/company/436A/story,
+P034,436A,サイバーソリューションズ,2025-10-23,MAILGATES Σ,BtoB,2018-07,2018,稼働中,,,,99,0,中,未判定,,,https://kitaishihon.com/company/436A/story,
+P035,436A,サイバーソリューションズ,2025-10-23,Cloud Mail SECURITYSUITE,BtoB,2019-04,2019,稼働中,,,,90,0,中,未判定,,,https://kitaishihon.com/company/436A/story,
+P036,436A,サイバーソリューションズ,2025-10-23,EMERGENCY MAIL,BtoB,2020-01,2020,稼働中,,,,81,0,中,未判定,,,https://kitaishihon.com/company/436A/story,
+P037,436A,サイバーソリューションズ,2025-10-23,Enterprise Audit,BtoB,2022-08,2022,稼働中,,,,50,0,中,未判定,,,https://kitaishihon.com/company/436A/story,
+P038,436A,サイバーソリューションズ,2025-10-23,SecureDrive,BtoB,2024-11,2024,稼働中,,,,23,0,中,未判定,,,https://kitaishihon.com/company/436A/story,
+P039,436A,サイバーソリューションズ,2025-10-23,SecureCommunicationONE,BtoB,2025-02,2025,稼働中,,,,20,0,中,未判定,,,https://kitaishihon.com/company/436A/story,
+P040,436A,サイバーソリューションズ,2025-10-23,SecureBoard,BtoB,2025-02,2025,稼働中,,,,20,0,中,未判定,,,https://kitaishihon.com/company/436A/story,
+P041,431A,ユーソナー,2025-10-17,LBC,BtoB,2004-06,2004,稼働中,,,,268,0,中,未判定,,,https://kitaishihon.com/company/431A/story,
+P042,431A,ユーソナー,2025-10-17,ユーソナー,BtoB,2013-04,2013,稼働中,,,,162,0,高,未判定,,,https://kitaishihon.com/company/431A/story,
+P043,431A,ユーソナー,2025-10-17,ユー名刺（u名刺）,BtoB,2016-01,2016,不明,,,,129,0,低,未判定,,,https://kitaishihon.com/company/431A/story,
+P044,431A,ユーソナー,2025-10-17,サイドソナー,BtoB,2016-11,2016,統合,2023-12,統合,プランソナー,85,1,高,未判定,,,https://kitaishihon.com/company/431A/story,サービス移管
+P045,431A,ユーソナー,2025-10-17,mソナー（旧名刺ソナー）,BtoB,2021-03,2021,稼働中,,,,67,0,中,未判定,,,https://kitaishihon.com/company/431A/story,
+P046,431A,ユーソナー,2025-10-17,プランソナー,BtoB,2023-12,2023,稼働中,,,,34,0,中,未判定,,,https://kitaishihon.com/company/431A/story,
+P047,431A,ユーソナー,2025-10-17,登記ソナー,BtoB,2024-07,2024,稼働中,,,,27,0,中,未判定,,,https://kitaishihon.com/company/431A/story,
+P048,410A,GMOコマース,2025-09-25,GMOマーケティングDX（旧まるっとサポート！O2O）,BtoB,2013-10,2013,稼働中,,,,156,0,高,未判定,,,https://kitaishihon.com/company/410A/story,
+P049,410A,GMOコマース,2025-09-25,まるっとサポート！ネットショップ,BtoB,2013-10,2013,不明,,,,156,0,低,未判定,,,https://kitaishihon.com/company/410A/story,
+P050,410A,GMOコマース,2025-09-25,おまかせ！WEB広告,BtoB,2014-05,2014,不明,,,,149,0,低,未判定,,,https://kitaishihon.com/company/410A/story,
+P051,410A,GMOコマース,2025-09-25,GMOリピーター,BtoB,2015-02,2015,稼働中,,,,140,0,中,未判定,,,https://kitaishihon.com/company/410A/story,
+P052,410A,GMOコマース,2025-09-25,GMOマーケティングDX Instagram,BtoB,2019-05,2019,稼働中,,,,89,0,中,未判定,,,https://kitaishihon.com/company/410A/story,
+P053,410A,GMOコマース,2025-09-25,GMO販促メッセージ,BtoB,2022-07,2022,稼働中,,,,51,0,中,未判定,,,https://kitaishihon.com/company/410A/story,
+P054,410A,GMOコマース,2025-09-25,GMOスタッフコネクト,BtoB,2024-01,2024,稼働中,,,,33,0,中,未判定,,,https://kitaishihon.com/company/410A/story,
+P055,410A,GMOコマース,2025-09-25,GMOマーケティングDX Instagram DM,BtoB,2024-11,2024,稼働中,,,,23,0,中,未判定,,,https://kitaishihon.com/company/410A/story,
+P056,410A,GMOコマース,2025-09-25,GMOマーケティングコネクト,BtoB,2025-02,2025,稼働中,,,,20,0,中,未判定,,,https://kitaishihon.com/company/410A/story,
+P057,350A,デジタルグリッド,2025-04-22,デジタルグリッドプラットフォーム（DGP）,BtoB,2020-02,2020,稼働中,,,,80,0,高,未判定,,,https://kitaishihon.com/company/350A/story,
+P058,350A,デジタルグリッド,2025-04-22,エコのはし,BtoB,2021-11,2021,稼働中,,,,59,0,中,未判定,,,https://kitaishihon.com/company/350A/story,
+P059,350A,デジタルグリッド,2025-04-22,GPA,BtoB,2022-09,2022,稼働中,,,,49,0,中,未判定,,,https://kitaishihon.com/company/350A/story,
+P060,350A,デジタルグリッド,2025-04-22,GX navi,BtoB,2023-04,2023,不明,,,,42,0,低,未判定,,,https://kitaishihon.com/company/350A/story,
+P061,350A,デジタルグリッド,2025-04-22,RE Bridge,BtoB,2023-07,2023,稼働中,,,,39,0,中,未判定,,,https://kitaishihon.com/company/350A/story,
+P062,340A,ジグザグ,2025-03-31,WorldShopping（旧Worldshopping.global）,BtoC,2016-04,2016,稼働中,,,,126,0,高,未判定,,,https://kitaishihon.com/company/340A/story,2017-08 リブランド
+P063,340A,ジグザグ,2025-03-31,WorldShoppingBIZ チェックアウト,BtoB,2017-08,2017,稼働中,,,,110,0,高,未判定,,,https://kitaishihon.com/company/340A/story,
+P064,340A,ジグザグ,2025-03-31,インバウンドナビ,BtoB,2025-05,2025,稼働中,,,,17,0,中,未判定,,,https://kitaishihon.com/company/340A/story,
+P065,338A,ZenmuTech,2025-03-27,VUMS,BtoB,2014-03,2014,販売終了,2018-12,販売終了,,57,1,高,未判定,,,https://kitaishihon.com/company/338A/story,2018年をもって新規販売終了（月は推定）
+P066,338A,ZenmuTech,2025-03-27,ZENMU（旧PASERI for PC）,BtoB,2015-08,2015,稼働中,,,,134,0,高,未判定,,,https://kitaishihon.com/company/338A/story,2017-01 改名
+P067,338A,ZenmuTech,2025-03-27,ZENMU Engine,BtoB,2018-04,2018,稼働中,,,,102,0,中,未判定,,,https://kitaishihon.com/company/338A/story,
+P068,338A,ZenmuTech,2025-03-27,ZENMU Virtual Desktop,BtoB,2019-06,2019,稼働中,,,,88,0,中,未判定,,,https://kitaishihon.com/company/338A/story,
+P069,338A,ZenmuTech,2025-03-27,QueryAhead,BtoB,2021-02,2021,稼働中,,,,68,0,中,未判定,,,https://kitaishihon.com/company/338A/story,
+P070,338A,ZenmuTech,2025-03-27,ZENMU Virtual Drive EE,BtoB,2021-11,2021,稼働中,,,,59,0,中,未判定,,,https://kitaishihon.com/company/338A/story,
+P071,334A,ビジュアル・プロセッシング・ジャパン,2025-03-25,thiiDa2,BtoB,2008-10,2008,不明,,,,216,0,低,未判定,,,https://kitaishihon.com/company/334A/story,CIERTO DAMが後継とみられる
+P072,334A,ビジュアル・プロセッシング・ジャパン,2025-03-25,CIERTO DAM,BtoB,2016-10,2016,稼働中,,,,120,0,高,未判定,,,https://kitaishihon.com/company/334A/story,
+P073,334A,ビジュアル・プロセッシング・ジャパン,2025-03-25,CIERTO PIM,BtoB,2021-07,2021,稼働中,,,,63,0,中,未判定,,,https://kitaishihon.com/company/334A/story,
+P074,335A,ミライロ,2025-03-24,ミライロID,BtoC,2019-07,2019,稼働中,,,,87,0,高,未判定,,,https://kitaishihon.com/company/335A/story,
+P075,335A,ミライロ,2025-03-24,ミライロストア,BtoC,2024-01,2024,稼働中,,,,33,0,中,未判定,,,https://kitaishihon.com/company/335A/story,ID内EC
+P076,330A,TalentX,2025-03-18,MyRefer,BtoB,2015-10,2015,統合,2026-03,統合,MyTalent Platform,125,1,高,未判定,,,https://kitaishihon.com/company/330A/story,パーソル社内で立上げ→2018 MBO
+P077,330A,TalentX,2025-03-18,MyRefer Alumni,BtoB,2018-10,2018,不明,,,,96,0,低,未判定,,,https://kitaishihon.com/company/330A/story,
+P078,330A,TalentX,2025-03-18,MyTalent,BtoB,2022-02,2022,統合,2026-03,統合,MyTalent Platform,49,1,高,未判定,,,https://kitaishihon.com/company/330A/story,
+P079,330A,TalentX,2025-03-18,MyBrand,BtoB,2024-01,2024,統合,2026-03,統合,MyTalent Platform,26,1,高,未判定,,,https://kitaishihon.com/company/330A/story,
+P080,330A,TalentX,2025-03-18,MyTalent Platform,BtoB,2026-03,2026,稼働中,,,,7,0,高,未判定,,,https://kitaishihon.com/company/330A/story,3製品の統合版
+P081,323A,フライヤー,2025-02-20,flier,BtoC,2013-10,2013,稼働中,,,,156,0,高,未判定,,,https://kitaishihon.com/company/323A/story,
+P082,323A,フライヤー,2025-02-20,flier 施設版,BtoB,2019-03,2019,稼働中,,,,91,0,中,未判定,,,https://kitaishihon.com/company/323A/story,
+P083,323A,フライヤー,2025-02-20,flier book labo,BtoC,2020-05,2020,稼働中,,,,77,0,中,未判定,,,https://kitaishihon.com/company/323A/story,
+P084,323A,フライヤー,2025-02-20,flier business（旧flier法人版）,BtoB,2023-09,2023,稼働中,,,,37,0,中,未判定,,,https://kitaishihon.com/company/323A/story,法人版の開始時期は記載なし
+P085,323A,フライヤー,2025-02-20,flier 成長組織ナビ,BtoB,2024-05,2024,稼働中,,,,29,0,中,未判定,,,https://kitaishihon.com/company/323A/story,
+P086,625A,Skyfall,2026-09-17,SKYFLAG,BtoB,2019-09,2019,稼働中,,,,85,0,高,成長,"事業セグメント売上 156億円(FY25, 前期比+24.3%)、会社売上 40.6億(FY21)→162億(FY25)",https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YX9N.pdf,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YX9N.pdf,
+P087,625A,Skyfall,2026-09-17,ポーカーチェイス,BtoC,2021-08,2021,稼働中,,,,62,0,高,未判定,,,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YX9N.pdf,
+P088,625A,Skyfall,2026-09-17,SKYFLAGリサーチ,BtoB,2024-04,2024,稼働中,,,,30,0,高,未判定,,,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YX9N.pdf,DataLab吸収合併
+P089,625A,Skyfall,2026-09-17,ポケットプレイ,BtoC,2024-06,2024,稼働中,,,,28,0,高,未判定,,,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YX9N.pdf,
+P090,625A,Skyfall,2026-09-17,SKYORDER,BtoB,2025-03,2025,稼働中,,,,19,0,高,未判定,,,https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100YX9N.pdf,
+P091,621A,オーディオストック,2026-09-16,Audiostock,BtoB2C,2013-10,2013,稼働中,,,,156,0,高,成長,定額制契約 4.7千件(2022/12)→10.1千件(2026/6)、売上 3.5億(FY21)→15.1億(FY25),https://www.jpx.co.jp/listing/stocks/new/t13vrt000001u6ah-att/09Audiostock-1s.pdf,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001u6ah-att/09Audiostock-1s.pdf,
+P092,621A,オーディオストック,2026-09-16,Audiostock 音楽配信サービス,BtoC,2020-03,2020,稼働中,,,,79,0,高,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001u6ah-att/09Audiostock-1s.pdf,
+P093,621A,オーディオストック,2026-09-16,ビートリ（β）,BtoC,2026-04,2026,稼働中,,,,6,0,中,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001u6ah-att/09Audiostock-1s.pdf,
+P094,607A,エブリー,2026-08-04,デリッシュキッチン（旧DELISH KITCHEN）,BtoC,2015-09,2015,稼働中,,,,133,0,高,未判定,,,https://kitaishihon.com/company/607A/story,
+P095,607A,エブリー,2026-08-04,KALOS,BtoC,2015-09,2015,終了,2020-07,クローズ,,58,1,高,未判定,,,https://kitaishihon.com/company/607A/story,他メディアへ経営資源集中
+P096,607A,エブリー,2026-08-04,トモニテ（旧MAMADAYS）,BtoC,2016-02,2016,稼働中,,,,128,0,高,未判定,,,https://kitaishihon.com/company/607A/story,2023-08 改名
+P097,607A,エブリー,2026-08-04,TIMELINE,BtoC,2016-03,2016,不明,,,,127,0,低,未判定,,,https://kitaishihon.com/company/607A/story,有報に終了記載なし
+P098,607A,エブリー,2026-08-04,CHECK,BtoC,2018-08,2018,譲渡,2020-02,統合（他社）,au PAY マーケット,18,1,高,未判定,,,https://kitaishihon.com/company/607A/story,他社サービスへ統合
+P099,607A,エブリー,2026-08-04,retail HUB,BtoB,2023-08,2023,稼働中,,,,38,0,高,未判定,,,https://kitaishihon.com/company/607A/story,
+P100,598A,チャットプラス,2026-07-15,ChatPlus,BtoB,2016-08,2016,稼働中,,,,122,0,高,未判定,,,https://kitaishihon.com/company/598A/story,
+P101,598A,チャットプラス,2026-07-15,AI AgentPlus（旧AIチャットボットプラン）,BtoB,2023-02,2023,稼働中,,,,44,0,高,未判定,,,https://kitaishihon.com/company/598A/story,2025-12 改名
+P102,598A,チャットプラス,2026-07-15,FAQPlus,BtoB,2024-10,2024,稼働中,,,,24,0,中,未判定,,,https://kitaishihon.com/company/598A/story,
+P103,598A,チャットプラス,2026-07-15,AI AgentPlus Pro,BtoB,2026-08,2026,稼働中,,,,2,0,中,未判定,,,https://kitaishihon.com/company/598A/story,
+P104,581A,GO,2026-06-16,全国タクシー→JapanTaxi,BtoC,2011-12,2011,統合,2020-09,統合,GO,105,1,中,未判定,,,https://www.watch.impress.co.jp/docs/news/1274134.html,2011-01『日本交通タクシー配車』が前身
+P105,581A,GO,2026-06-16,タクベル→MOV,BtoC,2018-04,2018,統合,2020-09,統合,GO,29,1,高,未判定,,,https://www.watch.impress.co.jp/docs/news/1274134.html,DeNAで開始
+P106,581A,GO,2026-06-16,GO,BtoC,2020-09,2020,稼働中,,,,73,0,高,未判定,,,https://kitaishihon.com/company/581A/story,
+P107,581A,GO,2026-06-16,GO BUSINESS,BtoB,2021-10,2021,稼働中,,,,60,0,高,未判定,,,https://kitaishihon.com/company/581A/story,
+P108,581A,GO,2026-06-16,GOチケット,BtoB,2023-02,2023,稼働中,,,,44,0,高,未判定,,,https://kitaishihon.com/company/581A/story,
+P109,581A,GO,2026-06-16,GOジョブ,BtoB,2023-12,2023,譲渡,2025-09,分社（持分法）,GOジョブ株式会社,21,1,高,未判定,,,https://kitaishihon.com/company/581A/story,
+P110,581A,GO,2026-06-16,GO Charge,BtoC,2024-06,2024,稼働中,,,,28,0,中,未判定,,,https://kitaishihon.com/company/581A/story,
+P111,581A,GO,2026-06-16,GOエコノミー,BtoC,2024-12,2024,稼働中,,,,22,0,中,未判定,,,https://kitaishihon.com/company/581A/story,
+P112,558A,SQUEEZE,2026-04-22,Mister Suite,BtoB,2014-11,2014,不明,,,,143,0,低,未判定,,,https://www.kabutore.biz/genzaikabuka/enkaku.html?code=558a,
+P113,558A,SQUEEZE,2026-04-22,suitebook,BtoB,2017-04,2017,稼働中,,,,114,0,高,未判定,,,https://www.kabutore.biz/genzaikabuka/enkaku.html?code=558a,
+P114,554A,バトンズ,2026-04-21,BATONZ（旧&Biz）,BtoB,2018-04,2018,稼働中,,,,102,0,高,未判定,,,https://kitaishihon.com/company/554A/story,前身@net事業部は2014-04
+P115,554A,バトンズ,2026-04-21,バトンズDD,BtoB,2020-08,2020,稼働中,,,,74,0,中,未判定,,,https://kitaishihon.com/company/554A/story,
+P116,554A,バトンズ,2026-04-21,B ASSIST,BtoB,2022-03,2022,稼働中,,,,55,0,中,未判定,,,https://kitaishihon.com/company/554A/story,
+P117,554A,バトンズ,2026-04-21,B CHECK,BtoB,2022-05,2022,稼働中,,,,53,0,中,未判定,,,https://kitaishihon.com/company/554A/story,
+P118,554A,バトンズ,2026-04-21,B MASS,BtoB,2022-10,2022,稼働中,,,,48,0,中,未判定,,,https://kitaishihon.com/company/554A/story,
+P119,519A,ベーシック,2026-03-25,引越しネット,BtoC,2004-05,2004,譲渡,2020-12,事業売却,,199,1,中,未判定,,,https://kitaishihon.com/company/519A/story,比較メディア事業売却に含まれるとみられる
+P120,519A,ベーシック,2026-03-25,Ferret（キーワード検索）,BtoB,2007-07,2007,不明,,,,231,0,低,未判定,,,https://kitaishihon.com/company/519A/story,
+P121,519A,ベーシック,2026-03-25,Ferret PLUS,BtoB,2008-06,2008,不明,,,,220,0,低,未判定,,,https://kitaishihon.com/company/519A/story,
+P122,519A,ベーシック,2026-03-25,Ferret SEO,BtoB,2009-03,2009,不明,,,,211,0,低,未判定,,,https://kitaishihon.com/company/519A/story,
+P123,519A,ベーシック,2026-03-25,Ferret Web,BtoB,2010-01,2010,不明,,,,201,0,低,未判定,,,https://kitaishihon.com/company/519A/story,
+P124,519A,ベーシック,2026-03-25,ferret（Webマーケメディア）,BtoB,2014-09,2014,稼働中,,,,145,0,中,未判定,,,https://kitaishihon.com/company/519A/story,
+P125,519A,ベーシック,2026-03-25,ferret One（旧Homeup!）,BtoB,2014-10,2014,稼働中,,,,144,0,高,未判定,,,https://kitaishihon.com/company/519A/story,2016-07 改名
+P126,519A,ベーシック,2026-03-25,formrun,BtoB,2018-06,2018,稼働中,,,,100,0,高,成長(累計),累計ユーザー 10万(2021/6)→50万(2025/8),https://kitaishihon.com/company/519A/story,https://kitaishihon.com/company/519A/story,mixtapeから事業譲受
+P127,519A,ベーシック,2026-03-25,bookrun,BtoB,2023-07,2023,稼働中,,,,39,0,中,未判定,,,https://kitaishihon.com/company/519A/story,
+P128,519A,ベーシック,2026-03-25,workrun,BtoB,2026-01,2026,稼働中,,,,9,0,中,未判定,,,https://kitaishihon.com/company/519A/story,
+P129,519A,ベーシック,2026-03-25,AIBOW,BtoB,2026-01,2026,稼働中,,,,9,0,中,未判定,,,https://kitaishihon.com/company/519A/story,
+P130,648A,ルクレ,2026-10-15,絵文字め～る,BtoC,2002-04,2002,不明,,,,294,0,低,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,KDDI協業
+P131,648A,ルクレ,2026-10-15,アロバビュー,BtoB,2005-07,2005,譲渡,2019-07,事業売却,セコム,168,1,高,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,2015-05分社→2019-07 売却
+P132,648A,ルクレ,2026-10-15,みんなのデジブック広場,BtoC,2007-10,2007,不明,,,,228,0,低,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
+P133,648A,ルクレ,2026-10-15,レコフォト for Wedding,BtoC,2011-06,2011,不明,,,,184,0,低,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
+P134,648A,ルクレ,2026-10-15,蔵衛門Pad,BtoB,2014-05,2014,稼働中,,,,149,0,高,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
+P135,648A,ルクレ,2026-10-15,蔵衛門工事黒板,BtoB,2017-01,2017,不明,,,,117,0,低,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
+P136,648A,ルクレ,2026-10-15,みんなの写真屋さん,BtoB2C,2018-04,2018,稼働中,,,,102,0,高,成長,"YAU 21.0万→21.8万、ARPU 2,620→4,136円（販売形態変更含む）",https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
+P137,648A,ルクレ,2026-10-15,うちの子スタンプメーカー,BtoC,2019-11,2019,不明,,,,83,0,低,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
+P138,648A,ルクレ,2026-10-15,ZUISO,BtoC,2020-04,2020,不明,,,,78,0,低,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
+P139,648A,ルクレ,2026-10-15,ZENGO,BtoB,2020-09,2020,不明,,,,73,0,低,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
+P140,648A,ルクレ,2026-10-15,蔵衛門クラウド／蔵衛門プレミアム,BtoB,2021-08,2021,稼働中,,,,62,0,高,成長,"有料ID 62,923(2024/9)→122,380(2026/6)、ARR 7.1億→10.7億",https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,2022-04 有料プラン
+P141,648A,ルクレ,2026-10-15,みんなのアルバム屋さん,BtoC,2022-01,2022,不明,,,,57,0,低,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
+P142,648A,ルクレ,2026-10-15,せんせいみて！,BtoB2C,2022-06,2022,稼働中,,,,52,0,高,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,未収益化
+P143,648A,ルクレ,2026-10-15,蔵衛門カメラ,BtoB,2024-06,2024,稼働中,,,,28,0,高,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
+P144,648A,ルクレ,2026-10-15,うちの子アルバム,BtoC,2024-11,2024,不明,,,,23,0,低,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
+P145,648A,ルクレ,2026-10-15,うちの子,BtoC,2026-01,2026,稼働中,,,,9,0,高,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
+P146,648A,ルクレ,2026-10-15,AITURBO,BtoB,2026-06,2026,稼働中,,,,4,0,高,未判定,,,https://www.jpx.co.jp/listing/stocks/new/t13vrt000001xw9e-att/10LECRE-1s.pdf,
